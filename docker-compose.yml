@@ -1,0 +1,54 @@
+#version: "3.8"
+#
+#services:
+#  postgres:
+#    image: postgres:16
+#    container_name: postgres_db
+#    environment:
+#      POSTGRES_DB: keycloak_db
+#      POSTGRES_USER: keycloak_user
+#      POSTGRES_PASSWORD: pg@@2018
+#    ports:
+#      - "5432:5432"
+#    volumes:
+#      - postgres_data:/var/lib/postgresql/data
+#
+#  keycloak:
+#    image: quay.io/keycloak/keycloak:26.6.2
+#    container_name: keycloak
+#    command: start-dev
+#    environment:
+#      KC_DB: postgres
+#      KC_DB_URL: jdbc:postgresql://postgres:5432/keycloak_db
+#      KC_DB_USERNAME: keycloak_user
+#      KC_DB_PASSWORD: pg@@2018
+#
+#      KEYCLOAK_ADMIN: testeur
+#      KEYCLOAK_ADMIN_PASSWORD: Tommyiq@@2018
+#    ports:
+#      - "8080:8080"
+#    depends_on:
+#      - postgres
+#
+#volumes:
+#  postgres_data:
+
+version: "3.8"
+
+services:
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.6.2
+    container_name: keycloak
+    command: start-dev
+    environment:
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://host.docker.internal:5432/keycloak_db
+      KC_DB_USERNAME: keycloak_user
+      KC_DB_PASSWORD: key@@20
+
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: Admin@123
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./keycloak-themes:/opt/keycloak/themes
